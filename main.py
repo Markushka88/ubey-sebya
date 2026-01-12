@@ -1,5 +1,6 @@
 import hashlib
 import random
+import sys
 
 def make_rng(key):
     h = hashlib.sha256(key.encode("utf-8")).digest()
@@ -34,13 +35,26 @@ def decrypt(code_text, key):
     return data.decode("utf-8")
 
 if __name__ == "__main__":
-    key = input("K: ")
-    text = input("T: ")
+    if "--decrypt" in sys.argv:
+        print("D - M.")
+        key = input("K: ")
+        cipher = input("E: ")
+        
+        try:
+            dec = decrypt(cipher, key)
+            print("\nT:")
+            print(dec)
+        except Exception as e:
+            pass
+    else:
+        print("E - M.")
+        key = input("K: ")
+        text = input("T: ")
 
-    enc = encrypt(text, key)
-    print("\nE:")
-    print(enc)
+        enc = encrypt(text, key)
+        print("\nE:")
+        print(enc)
 
-    dec = decrypt(enc, key)
-    print("\nF-CvO. D:")
-    print(dec)
+        print("\nF-CvO. D:")
+        dec = decrypt(enc, key)
+        print(dec)
